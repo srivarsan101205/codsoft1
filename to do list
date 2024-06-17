@@ -1,0 +1,93 @@
+class Task:
+    def __init__(self, description):
+        self.description = description
+        self.completed = False
+
+    def __str__(self):
+        status = "✓" if self.completed else "✗"
+        return f"[{status}] {self.description}"
+
+    def mark_complete(self):
+        self.completed = True
+
+    def mark_incomplete(self):
+        self.completed = False
+class TodoList:
+    def __init__(self):
+        self.tasks = []
+
+    def add_task(self, description):
+        task = Task(description)
+        self.tasks.append(task)
+
+    def view_tasks(self):
+        if not self.tasks:
+            print("No tasks in the list.")
+        else:
+            for index, task in enumerate(self.tasks, start=1):
+                print(f"{index}. {task}")
+
+    def update_task(self, task_index, new_description):
+        if 0 <= task_index < len(self.tasks):
+            self.tasks[task_index].description = new_description
+        else:
+            print("Invalid task number.")
+
+    def delete_task(self, task_index):
+        if 0 <= task_index < len(self.tasks):
+            del self.tasks[task_index]
+        else:
+            print("Invalid task number.")
+
+    def mark_task_complete(self, task_index):
+        if 0 <= task_index < len(self.tasks):
+            self.tasks[task_index].mark_complete()
+        else:
+            print("Invalid task number.")
+
+    def mark_task_incomplete(self, task_index):
+        if 0 <= task_index < len(self.tasks):
+            self.tasks[task_index].mark_incomplete()
+        else:
+            print("Invalid task number.")
+def main():
+    todo_list = TodoList()
+
+    while True:
+        print("\nTo-Do List Application")
+        print("1. Add Task")
+        print("2. View Tasks")
+        print("3. Update Task")
+        print("4. Delete Task")
+        print("5. Mark Task Complete")
+        print("6. Mark Task Incomplete")
+        print("7. Exit")
+
+        choice = input("Choose an option: ")
+
+        if choice == '1':
+            description = input("Enter task description: ")
+            todo_list.add_task(description)
+        elif choice == '2':
+            todo_list.view_tasks()
+        elif choice == '3':
+            task_number = int(input("Enter task number to update: ")) - 1
+            new_description = input("Enter new task description: ")
+            todo_list.update_task(task_number, new_description)
+        elif choice == '4':
+            task_number = int(input("Enter task number to delete: ")) - 1
+            todo_list.delete_task(task_number)
+        elif choice == '5':
+            task_number = int(input("Enter task number to mark complete: ")) - 1
+            todo_list.mark_task_complete(task_number)
+        elif choice == '6':
+            task_number = int(input("Enter task number to mark incomplete: ")) - 1
+            todo_list.mark_task_incomplete(task_number)
+        elif choice == '7':
+            print("Exiting application.")
+            break
+        else:
+            print("Invalid option. Please try again.")
+
+if __name__ == "__main__":
+    main()
